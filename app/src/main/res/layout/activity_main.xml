@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Giris">
+
+    <EditText
+        android:id="@+id/txtPosta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="216dp"
+        android:ems="10"
+        android:hint="e posta"
+        android:inputType="textEmailAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonKayitOl"
+        android:layout_width="212dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="600dp"
+        android:onClick="buttonKayitOl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonGirisYap"
+        android:layout_width="212dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="556dp"
+        android:onClick="buttonGirisYap"
+        android:text="Giriş Yap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtTelefon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="480dp"
+        android:ems="10"
+        android:hint="telefon"
+        android:inputType="phone"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtSoyad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="424dp"
+        android:ems="10"
+        android:hint="soyad"
+        android:inputType="textPersonName"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtAd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="372dp"
+        android:ems="10"
+        android:hint="ad"
+        android:inputType="textPersonName"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtSifreTekrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="320dp"
+        android:ems="10"
+        android:hint="şifre (tekrar)"
+        android:inputType="textPassword"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtSifre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="268dp"
+        android:ems="10"
+        android:hint="şifre"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/layoutAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/ibuttonAvatar"
+            android:layout_width="158dp"
+            android:layout_height="158dp"
+            android:layout_marginTop="40dp"
+            android:longClickable="true"
+            android:onClick="ibuttonAvatar"
+            android:scaleType="centerInside"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

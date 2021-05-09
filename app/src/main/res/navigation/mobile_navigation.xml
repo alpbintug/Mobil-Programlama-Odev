@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_sorular">
+
+    <fragment
+        android:id="@+id/nav_sorular"
+        android:name="com.example.a17011066_alp_bintug_uzun.ui.sorular.SorularFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_sorular" />
+
+    <fragment
+        android:id="@+id/nav_sinavlar"
+        android:name="com.example.a17011066_alp_bintug_uzun.ui.sinavlar.SinavlarFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_sinavlar" />
+
+    <fragment
+        android:id="@+id/nav_profil"
+        android:name="com.example.a17011066_alp_bintug_uzun.ui.profil.ProfilFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_profil" />
+</navigation>
