@@ -36,6 +36,7 @@ public class Giris extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //region SETTING UP VARIABLES
         db = new DBHelper(this);
+        this.deleteDatabase(db.getDatabaseName());
         Button buttonKayitOl = ((Button)findViewById(R.id.buttonKayitOl));
         ImageButton ibuttonAvatar = ((ImageButton)findViewById(R.id.ibuttonAvatar));
         ibuttonAvatar.setOnLongClickListener(new View.OnLongClickListener() {

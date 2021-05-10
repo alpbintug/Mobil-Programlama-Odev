@@ -23,10 +23,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SORU_SIKLAR = "siklar";
     public static final String SORU_DOGRU_SIK = "dogru_sik";
     public static final String SORU_ID = "soru_id";
+    public static final String SORU_TIPI = "soru_tipi";
     public static final String SINAV_TABLOSU = "Sinavlar";
     public static final String SINAV_ZORLUK_DERECESI = "zorluk_derecesi";
     public static final String SINAV_SURESI = "sinav_suresi";
     public static final String SINAV_ID = "sinav_id";
+    public static final String SINAV_ADI = "sinav_adi";
     public static final String SINAV_SORULARI_TABLOSU = "Sinav_Sorulari";
     private static final String Kullanici_VT_Yarat = "CREATE TABLE "+KULLANICI_TABLOSU+"(" +
             KULLANICI_EPOSTA+" TEXT NOT NULL UNIQUE, " +
@@ -43,11 +45,13 @@ public class DBHelper extends SQLiteOpenHelper {
             SORU_MEDYA_YOLU+" TEXT, " +
             SORU_SIKLAR+" TEXT NOT NULL, " +
             SORU_DOGRU_SIK+" INTEGER NOT NULL, " +
+            SORU_TIPI + " INTEGER DEFAULT 0, "+
             SORU_ID+" INTEGER NOT NULL UNIQUE, " +
             " PRIMARY KEY("+SORU_ID+")" +
             ")";
     private static  final String Sinavlar_VT_Yarat = "CREATE TABLE "+SINAV_TABLOSU+"(" +
             KULLANICI_EPOSTA+" TEXT NOT NULL, " +
+            SINAV_ADI+" TEXT NOT NULL, " +
             SINAV_ZORLUK_DERECESI+" INTEGER, " +
             SINAV_SURESI+" INTEGER, " +
             SINAV_ID+" INTEGER NOT NULL UNIQUE, " +
@@ -133,7 +137,5 @@ public class DBHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return null;
-
-
     }
 }

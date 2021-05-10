@@ -35,9 +35,6 @@ public class SinavEkrani extends AppCompatActivity {
         int[] rgb = {255,255,0};
         int lastTo255 = 0;
         for (int i = 0;i<250;i++){
-
-            //cardview = (CardView)findViewById(R.id.sinav_cardView);
-            Log.d("annen1","baban1");
             View li = LayoutInflater.from(this).inflate(R.layout.sinavlar_liste_ogesi,null);
 
             if(rgb[(lastTo255+1)%3]!=255){
