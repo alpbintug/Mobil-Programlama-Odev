@@ -2,8 +2,72 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/xd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MenuEkrani">
 
+    <ImageButton
+        android:id="@+id/menu_ibuttonAvatar"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="4dp"
+        android:longClickable="true"
+        android:scaleType="centerInside"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/menu_textWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="27dp"
+        android:editable="false"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ibuttonSorular"
+        android:layout_width="409dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="112dp"
+        android:background="#3F51B5"
+        android:onClick="buttonSorular"
+        android:text="SORULARIM"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ibuttonSinavlar"
+        android:layout_width="409dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="383dp"
+        android:background="#673AB7"
+        android:onClick="buttonSinavlar"
+        android:text="SINAVLARIM"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ibuttonCikisYap"
+        android:text = "ÇIKIŞ YAP"
+        android:layout_width="409dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="384dp"
+        android:layout_marginEnd="383dp"
+        android:background="#9C27B0"
+        android:onClick="buttonCikisYap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

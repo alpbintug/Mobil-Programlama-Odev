@@ -8,6 +8,7 @@ public class Soru {
     private int zorluk;
     private ArrayList<String> siklar;
     private int dogruCevap;
+    private int soruTipi; //0-> Metinli, 1-> Resimli, 2-> Sesli, 3-> Videolu
 
     //region Constructer & Getter-Setter
     public String getSoruMetni() {
@@ -22,8 +23,9 @@ public class Soru {
         return medyaYolu;
     }
 
-    public void setMedyaYolu(String medyaYolu) {
+    public void setMedyaYolu(String medyaYolu, int medyaTipi) {
         this.medyaYolu = medyaYolu;
+        this.soruTipi = medyaTipi;
     }
 
     public int getZorluk() {
@@ -55,6 +57,15 @@ public class Soru {
         this.zorluk = zorluk;
         this.siklar = siklar;
         this.dogruCevap = dogruCevap;
+        this.soruTipi = 0;
+    }
+
+    public int getSoruTipi() {
+        return soruTipi;
+    }
+
+    public void setSoruTipi(int soruTipi) {
+        this.soruTipi = soruTipi;
     }
 //endregion
 }

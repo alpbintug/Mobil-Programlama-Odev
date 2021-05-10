@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.17011066_Alp_Bintug_Uzun">
-        <activity android:name=".MenuEkrani"></activity>
+        <activity android:name=".SoruOlusturmaEkrani"></activity>
+        <activity android:name=".SinavEkrani" />
+        <activity android:name=".SoruEkrani" />
+        <activity android:name=".MenuEkrani" />
         <activity android:name=".Giris">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
