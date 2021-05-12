@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/soru_cardView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -20,13 +20,16 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/sinav_butonEdit"
+                android:id="@+id/button_soruEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:background="#E48585"
+                android:onClick="buttonSoruDuzenle"
                 android:text="Düzenle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,89 +47,159 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/txtSoruMetni"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sinav_butonEdit" />
-
-            <EditText
-                android:id="@+id/txtSik0"
+                android:id="@+id/soru_txtSoruMetni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="Soru Metnini Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/txtSik1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSoruMetni" />
+                app:layout_constraintTop_toBottomOf="@+id/button_soruEdit" />
 
             <EditText
-                android:id="@+id/txtSik1"
+                android:id="@+id/soru_txtSik0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="(ZORUNLU) Birinci Şıkkı Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/txtSik2"
+                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/soru_txtSoruMetni" />
+
+            <EditText
+                android:id="@+id/soru_txtSik1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="5dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="(ZORUNLU) İkinci Şıkkı Giriniz"
+                android:inputType="textMultiLine"
+                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSik0" />
+                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik0" />
 
             <EditText
-                android:id="@+id/txtSik2"
+                android:id="@+id/soru_txtSik2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="Üçüncü Şıkkı Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/txtSik3"
+                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSik1" />
+                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik1" />
 
             <EditText
-                android:id="@+id/txtSik3"
+                android:id="@+id/soru_txtSik3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="Dördüncü Şıkkı Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/txtSik4"
+                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSik2" />
+                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik2" />
 
             <EditText
-                android:id="@+id/txtSik4"
+                android:id="@+id/soru_txtSik4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="Beşinci Şıkkı Giriniz"
                 android:inputType="textMultiLine"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSik3" />
+                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik3" />
+
+            <TextView
+                android:id="@+id/txt_soruID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:editable="false"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/lbl_sinavSoruID"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/radbuttongr_siklar"
+                android:layout_width="190dp"
+                android:layout_height="243dp"
+                android:layout_marginTop="100dp"
+                app:layout_constraintStart_toEndOf="@+id/soru_txtSik3"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/radbutton_sik0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:text="0"
+                    android:textSize="0sp" />
+
+                <RadioButton
+                    android:id="@+id/radbutton_sik1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:text="1"
+                    android:textSize="0sp" />
+
+                <RadioButton
+                    android:id="@+id/radbutton_sik2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:text="2"
+                    android:textSize="0sp" />
+
+                <RadioButton
+                    android:id="@+id/radbutton_sik3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:text="3"
+                    android:textSize="0sp" />
+
+                <RadioButton
+                    android:id="@+id/radbutton_sik4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:text="4"
+                    android:textSize="0sp" />
+            </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

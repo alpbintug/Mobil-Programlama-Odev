@@ -32,6 +32,7 @@ public class SinavEkrani extends AppCompatActivity {
 
         context = getApplicationContext();
         layout = (LinearLayout)findViewById(R.id.sinav_sinavListesi);
+        /*
         int[] rgb = {255,255,0};
         int lastTo255 = 0;
         for (int i = 0;i<250;i++){
@@ -51,6 +52,9 @@ public class SinavEkrani extends AppCompatActivity {
 
             li.findViewById(R.id.sinav_cardView).setBackgroundColor(bgc);
             layout.addView(li);
-        }
+        }*/
+
+        View li = LayoutInflater.from(this).inflate(R.layout.sinavlar_liste_ogesi,null);
+        layout.addView(li);
     }
 }

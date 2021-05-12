@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 
 public class Giris extends AppCompatActivity {
 
-    private ArrayList<Kullanici> kullaniciList = new ArrayList<Kullanici>();
     private int avatarCounter = 0;
     private int loginErrorCounter = 0;
     private DBHelper db;
@@ -36,7 +35,7 @@ public class Giris extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //region SETTING UP VARIABLES
         db = new DBHelper(this);
-        this.deleteDatabase(db.getDatabaseName());
+        //this.deleteDatabase(db.getDatabaseName());
         Button buttonKayitOl = ((Button)findViewById(R.id.buttonKayitOl));
         ImageButton ibuttonAvatar = ((ImageButton)findViewById(R.id.ibuttonAvatar));
         ibuttonAvatar.setOnLongClickListener(new View.OnLongClickListener() {
@@ -51,7 +50,6 @@ public class Giris extends AppCompatActivity {
         String kayitButtonText = "Kayıt Ol";
         buttonKayitOl.setText(kayitButtonText);
         ibuttonAvatar.setBackground(drawableAvatar);
-        ArrayList<Kullanici> kullaniciList = new ArrayList<Kullanici>();
         //endregion
 
     }
@@ -175,7 +173,6 @@ public class Giris extends AppCompatActivity {
             if(!hataVar) {
 
                 Kullanici kullanici = new Kullanici(strAd, strSoyad, strTelefon, strEposta, strSifre,"avatar"+String.valueOf(avatarCounter%10));
-                kullaniciList.add(kullanici);
                 if(db.kullaniciEkle(kullanici)){
                     Toast.makeText(getApplicationContext(), "Kayit basarili!", Toast.LENGTH_SHORT).show();
                     clearText(view);

@@ -116,7 +116,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/sinav_butonEdit"
+                android:id="@+id/button_sinavEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="300dp"

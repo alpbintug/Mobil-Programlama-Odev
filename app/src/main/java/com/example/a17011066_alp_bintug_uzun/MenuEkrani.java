@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class MenuEkrani extends AppCompatActivity {
 
     private DBHelper db;
+    Kullanici kullanici;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +22,7 @@ public class MenuEkrani extends AppCompatActivity {
 
         Intent intent = getIntent();
         db = new DBHelper(this);
-        Kullanici kullanici = new Kullanici(
+        kullanici = new Kullanici(
                 intent.getStringExtra(db.KULLANICI_AD),
                 intent.getStringExtra(db.KULLANICI_SOYAD),
                 intent.getStringExtra(db.KULLANICI_TELEFON),
@@ -40,10 +41,13 @@ public class MenuEkrani extends AppCompatActivity {
 
     public void buttonSorular(View view){
         Intent menuAcma = new Intent(getApplicationContext(),SoruEkrani.class);
+        menuAcma.putExtra(db.KULLANICI_EPOSTA,kullanici.getEposta());
         startActivity(menuAcma);
     }
     public void buttonSinavlar(View view){
+        Log.d("olus","turdum");
         Intent menuAcma = new Intent(getApplicationContext(),SinavEkrani.class);
+        Log.d("aci","yorum");
         startActivity(menuAcma);
 
     }

@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "mobil.db";
     public static final int DATABASE_VERSION = 1;
@@ -46,16 +49,14 @@ public class DBHelper extends SQLiteOpenHelper {
             SORU_SIKLAR+" TEXT NOT NULL, " +
             SORU_DOGRU_SIK+" INTEGER NOT NULL, " +
             SORU_TIPI + " INTEGER DEFAULT 0, "+
-            SORU_ID+" INTEGER NOT NULL UNIQUE, " +
-            " PRIMARY KEY("+SORU_ID+")" +
+            SORU_ID+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE" +
             ")";
     private static  final String Sinavlar_VT_Yarat = "CREATE TABLE "+SINAV_TABLOSU+"(" +
             KULLANICI_EPOSTA+" TEXT NOT NULL, " +
             SINAV_ADI+" TEXT NOT NULL, " +
             SINAV_ZORLUK_DERECESI+" INTEGER, " +
             SINAV_SURESI+" INTEGER, " +
-            SINAV_ID+" INTEGER NOT NULL UNIQUE, " +
-            " PRIMARY KEY("+SINAV_ID+")" +
+            SINAV_ID+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE" +
             ")";
     private  static final String SinavSorulari_VT_Yarat = "CREATE TABLE "+SINAV_SORULARI_TABLOSU+"(" +
             SINAV_ID+" INTEGER NOT NULL, " +
@@ -89,15 +90,11 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("sorgu","yokki");
         String q = "SELECT * FROM " + KULLANICI_TABLOSU + " WHERE " + KULLANICI_EPOSTA + " = \"" +kullanici.getEposta()+"\"";
         SQLiteDatabase db = this.getReadableDatabase();
-        Log.d("xd",q);
         Cursor cursor = db.rawQuery(q, null);
-        Log.d("dx",q);
-        Log.d("qq",q);
         if(cursor.getCount()>0) {
             cursor.close();
             return false;
         }
-        Log.d("şl",q);
         cursor.close();
         ContentValues cv = new ContentValues();
         cv.put(KULLANICI_EPOSTA,kullanici.getEposta());
@@ -106,12 +103,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(KULLANICI_TELEFON,kullanici.getTelefon());
         cv.put(KULLANICI_SIFRE,kullanici.getSifre());
         cv.put(KULLANICI_AVATAR,kullanici.getAvatar());
-        Log.d("xc",q);
 
-        db.insert(KULLANICI_TABLOSU,null,cv);
-        Log.d("qw",q);
+        long result = db.insert(KULLANICI_TABLOSU,null,cv);
         db.close();
-        return true;
+        return result!= -1;
     }
     public Kullanici kullaniciGirisi(String eposta, String sifre){
         Log.d(eposta,sifre);
@@ -134,8 +129,62 @@ public class DBHelper extends SQLiteOpenHelper {
             cursor.close();
             return kullanici;
         }
-
         cursor.close();
         return null;
+    }
+
+    public boolean soruEkle(Soru soru){
+        String siklar = String.join("¨",soru.getSiklar());
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(KULLANICI_EPOSTA,soru.getKullaniciEposta());
+        cv.put(SORU_METNI,soru.getSoruMetni());
+        cv.put(SORU_MEDYA_YOLU,soru.getMedyaYolu());
+        cv.put(SORU_SIKLAR,siklar);
+        cv.put(SORU_DOGRU_SIK,soru.getDogruCevap());
+        cv.put(SORU_TIPI,soru.getSoruTipi());
+
+        long result = db.insert(SORU_TABLOSU,null,cv);
+        db.close();
+        return result!=-1;
+    }
+
+    public boolean soruDuzenle(Soru soru){
+
+        String siklar = String.join("¨",soru.getSiklar());
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(SORU_DOGRU_SIK,soru.getDogruCevap());
+        cv.put(SORU_MEDYA_YOLU,soru.getMedyaYolu());
+        cv.put(SORU_METNI,soru.getSoruMetni());
+        cv.put(SORU_SIKLAR,siklar);
+        cv.put(SORU_TIPI,soru.getSoruTipi());
+
+        long result = db.update(SORU_TABLOSU, cv, SORU_ID+" = ?", new String[]{String.valueOf(soru.getSoruID())});
+        db.close();
+
+        return result == 1;
+    }
+
+    public ArrayList<Soru> sorulariGetir(String kullaniciEPosta){
+        ArrayList<Soru> sorular = new ArrayList<Soru>();
+        String q = "SELECT * FROM " + SORU_TABLOSU + " WHERE " + KULLANICI_EPOSTA +" = \"" + kullaniciEPosta +"\"";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(q, null);
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            sorular.add(new Soru(cursor.getString(cursor.getColumnIndex(KULLANICI_EPOSTA)),
+                    cursor.getString(cursor.getColumnIndex(SORU_METNI)),
+                    cursor.getString(cursor.getColumnIndex(SORU_MEDYA_YOLU)),
+                    cursor.getString(cursor.getColumnIndex(SORU_SIKLAR)).split("¨").length,
+                    cursor.getString(cursor.getColumnIndex(SORU_SIKLAR)).split("¨"),
+                    cursor.getInt(cursor.getColumnIndex(SORU_DOGRU_SIK)),
+                    cursor.getInt(cursor.getColumnIndex(SORU_TIPI))));
+        }
+
+        return  sorular;
+
     }
 }

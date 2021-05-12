@@ -3,14 +3,38 @@ package com.example.a17011066_alp_bintug_uzun;
 import java.util.ArrayList;
 
 public class Soru {
+
+
+
+    private int soruID;
+    private String kullaniciEposta;
     private String soruMetni;
     private String medyaYolu;
     private int zorluk;
-    private ArrayList<String> siklar;
+    private String[] siklar;
     private int dogruCevap;
     private int soruTipi; //0-> Metinli, 1-> Resimli, 2-> Sesli, 3-> Videolu
 
     //region Constructer & Getter-Setter
+    public Soru(String kullaniciEposta, String soruMetni, int zorluk, String[] siklar, int dogruCevap) {
+        this.kullaniciEposta = kullaniciEposta;
+        this.soruMetni = soruMetni;
+        this.zorluk = zorluk;
+        this.siklar = siklar;
+        this.dogruCevap = dogruCevap;
+        this.soruTipi = 0;
+    }
+
+    public Soru(String kullaniciEposta, String soruMetni, String medyaYolu ,int zorluk, String[] siklar, int dogruCevap, int soruTipi) {
+        this.kullaniciEposta = kullaniciEposta;
+        this.soruMetni = soruMetni;
+        this.medyaYolu = medyaYolu;
+        this.zorluk = zorluk;
+        this.siklar = siklar;
+        this.dogruCevap = dogruCevap;
+        this.soruTipi = soruTipi;
+    }
+
     public String getSoruMetni() {
         return soruMetni;
     }
@@ -36,11 +60,11 @@ public class Soru {
         this.zorluk = zorluk;
     }
 
-    public ArrayList<String> getSiklar() {
+    public String[] getSiklar() {
         return siklar;
     }
 
-    public void setSiklar(ArrayList<String> siklar) {
+    public void setSiklar(String[] siklar) {
         this.siklar = siklar;
     }
 
@@ -52,13 +76,6 @@ public class Soru {
         this.dogruCevap = dogruCevap;
     }
 
-    public Soru(String soruMetni, int zorluk, ArrayList<String> siklar, int dogruCevap) {
-        this.soruMetni = soruMetni;
-        this.zorluk = zorluk;
-        this.siklar = siklar;
-        this.dogruCevap = dogruCevap;
-        this.soruTipi = 0;
-    }
 
     public int getSoruTipi() {
         return soruTipi;
@@ -66,6 +83,20 @@ public class Soru {
 
     public void setSoruTipi(int soruTipi) {
         this.soruTipi = soruTipi;
+    }
+    public String getKullaniciEposta() {
+        return kullaniciEposta;
+    }
+
+    public void setKullaniciEposta(String kullaniciEposta) {
+        this.kullaniciEposta = kullaniciEposta;
+    }
+    public int getSoruID(){
+        return this.soruID;
+    }
+
+    public void setSoruID(int soruID) {
+        this.soruID = soruID;
     }
 //endregion
 }
