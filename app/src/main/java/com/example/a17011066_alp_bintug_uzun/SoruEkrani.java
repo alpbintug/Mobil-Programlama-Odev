@@ -59,7 +59,7 @@ public class SoruEkrani extends AppCompatActivity {
                 lastTo255=(lastTo255+1)%3;
             }
             viewToAdd.findViewById(R.id.soru_cardView).setBackgroundColor(bgc);
-            ((Button)viewToAdd.findViewById(R.id.button_soruEdit)).setText("Kaydet");
+            ((Button)viewToAdd.findViewById(R.id.button_soruEdit)).setText("Düzenle");
 
             ((TextView)viewToAdd.findViewById(R.id.txt_soruID)).setText(String.valueOf(soru.getSoruID()));
             ((EditText)viewToAdd.findViewById(R.id.soru_txtSoruMetni)).setText(soru.getSoruMetni());
@@ -75,27 +75,33 @@ public class SoruEkrani extends AppCompatActivity {
                         ((EditText)viewToAdd.findViewById(R.id.soru_txtSik4)).setText(soru.getSiklar()[4]);
                     }
                     else{
-                        ((EditText)viewToAdd.findViewById(R.id.soru_txtSik4)).setHeight(0);
-                        ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik4)).setHeight(0);
+                        ((EditText)viewToAdd.findViewById(R.id.soru_txtSik4)).setVisibility(View.INVISIBLE);
+                        ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik4)).setVisibility(View.INVISIBLE);
                     }
                 }
                 else{
-                    ((EditText)viewToAdd.findViewById(R.id.soru_txtSik4)).setHeight(0);
-                    ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik4)).setHeight(0);
-                    ((EditText)viewToAdd.findViewById(R.id.soru_txtSik3)).setHeight(0);
-                    ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik3)).setHeight(0);
+                    ((EditText)viewToAdd.findViewById(R.id.soru_txtSik4)).setVisibility(View.INVISIBLE);
+                    ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik4)).setVisibility(View.INVISIBLE);
+                    ((EditText)viewToAdd.findViewById(R.id.soru_txtSik3)).setVisibility(View.INVISIBLE);
+                    ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik3)).setVisibility(View.INVISIBLE);
 
                 }
             }
             else{
-                ((EditText)viewToAdd.findViewById(R.id.soru_txtSik4)).setHeight(0);
-                ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik4)).setHeight(0);
-                ((EditText)viewToAdd.findViewById(R.id.soru_txtSik3)).setHeight(0);
-                ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik3)).setHeight(0);
-                ((EditText)viewToAdd.findViewById(R.id.soru_txtSik2)).setHeight(0);
-                ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik2)).setHeight(0);
+                ((EditText)viewToAdd.findViewById(R.id.soru_txtSik4)).setVisibility(View.INVISIBLE);
+                ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik4)).setVisibility(View.INVISIBLE);
+                ((EditText)viewToAdd.findViewById(R.id.soru_txtSik3)).setVisibility(View.INVISIBLE);
+                ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik3)).setVisibility(View.INVISIBLE);
+                ((EditText)viewToAdd.findViewById(R.id.soru_txtSik2)).setVisibility(View.INVISIBLE);
+                ((RadioButton)viewToAdd.findViewById(R.id.radbutton_sik2)).setVisibility(View.INVISIBLE);
             }
-
+            viewToAdd.findViewById(R.id.soru_txtSoruMetni).setEnabled(false);
+            viewToAdd.findViewById(R.id.soru_txtSik0).setEnabled(false);
+            viewToAdd.findViewById(R.id.soru_txtSik1).setEnabled(false);
+            viewToAdd.findViewById(R.id.soru_txtSik2).setEnabled(false);
+            viewToAdd.findViewById(R.id.soru_txtSik3).setEnabled(false);
+            viewToAdd.findViewById(R.id.soru_txtSik4).setEnabled(false);
+            viewToAdd.findViewById(R.id.radbuttongr_siklar).setEnabled(false);
             layout.addView(viewToAdd);
         }
 
@@ -118,7 +124,6 @@ public class SoruEkrani extends AppCompatActivity {
 
     public void buttonSoruDuzenle(View view){
         ViewGroup parentView = (ViewGroup)view.getParent();
-        Log.d("xd","heheheh");
         Button duzenlemeButonu = (Button)parentView.findViewById(R.id.button_soruEdit);
         EditText soruMetni = (EditText)parentView.findViewById(R.id.soru_txtSoruMetni);
         EditText sik0 = (EditText)parentView.findViewById(R.id.soru_txtSik0);
@@ -129,7 +134,6 @@ public class SoruEkrani extends AppCompatActivity {
         RadioGroup radioGroup_Siklar = (RadioGroup)parentView.findViewById(R.id.radbuttongr_siklar);
         TextView soruID = (TextView)parentView.findViewById(R.id.txt_soruID);
 
-        Log.d(sik0.getText().toString(),"heheheh");
         ArrayList<String> siklar = new ArrayList<String>();
         if(sik0.getText().toString().length()!=0)
             siklar.add(sik0.getText().toString());
@@ -141,9 +145,7 @@ public class SoruEkrani extends AppCompatActivity {
             siklar.add(sik3.getText().toString());
         if(sik4.getText().toString().length()!=0)
             siklar.add(sik4.getText().toString());
-        Log.d("herSeyiAyarladim","heheheh");
         if(duzenlemeButonu.getText().toString().equals("Kaydet")){
-            Log.d("ife girdim","heheheh");
             if(soruMetni.getText().length()==0 || siklar.size() <2){
                 Toast.makeText(this,"Lütfen soru metnini giriniz ve en az iki adet şıkkı doldurunuz.",Toast.LENGTH_LONG).show();
                 return;
@@ -151,7 +153,23 @@ public class SoruEkrani extends AppCompatActivity {
             Soru soru = new Soru(kullaniciEposta,soruMetni.getText().toString(),siklar.size(),siklar.toArray(new String[0]),Integer.valueOf(((RadioButton)parentView.findViewById(radioGroup_Siklar.getCheckedRadioButtonId())).getText().toString()));
 
             if(soruID.getText().toString().length()==0){
-                db.soruEkle(soru);
+                if(db.soruEkle(soru)){
+
+                    int bgc = Color.argb(alpha,rgb[0],rgb[1],rgb[2]);
+                    if(rgb[(lastTo255+1)%3]!=255){
+                        rgb[(lastTo255+1)%3]+=15;
+                    }
+                    else if(rgb[lastTo255]>0){
+                        rgb[lastTo255]-=15;
+                    }
+                    else{
+                        lastTo255=(lastTo255+1)%3;
+                    }
+                    viewToAdd = LayoutInflater.from(this).inflate(R.layout.sorular_liste_ogesi_metinli,null);
+                    viewToAdd.findViewById(R.id.soru_cardView).setBackgroundColor(bgc);
+                    ((Button)viewToAdd.findViewById(R.id.button_soruEdit)).setText("Kaydet");
+                    layout.addView(viewToAdd);
+                }
             }
             else {
                 soru.setSoruID(Integer.valueOf(soruID.getText().toString()));
@@ -164,25 +182,20 @@ public class SoruEkrani extends AppCompatActivity {
             sik2.setEnabled(false);
             sik3.setEnabled(false);
             sik4.setEnabled(false);
+            radioGroup_Siklar.setEnabled(false);
             duzenlemeButonu.setText("Düzenle");
         }
         else{
             Log.d("else girdim","heheheh");
             soruMetni.setEnabled(true);
 
-            Log.d("eneybılladım soru metnini","heheheh");
             sik0.setEnabled(true);
-            Log.d("eneybılladım sik 0 metnini","heheheh");
             sik1.setEnabled(true);
-            Log.d("eneybılladım sik 1 metnini","heheheh");
             sik2.setEnabled(true);
-            Log.d("eneybılladım sik 2 metnini","heheheh");
             sik3.setEnabled(true);
-            Log.d("eneybılladım sik 3 metnini","heheheh");
             sik4.setEnabled(true);
-            Log.d("eneybılladım sik 4 metnini","heheheh");
+            radioGroup_Siklar.setEnabled(true);
             duzenlemeButonu.setText("Kaydet");
-            Log.d("degistirdim buton metnini","heheheh");
         }
     }
 }
