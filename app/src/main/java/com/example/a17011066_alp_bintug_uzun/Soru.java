@@ -34,6 +34,16 @@ public class Soru {
         this.dogruCevap = dogruCevap;
         this.soruTipi = soruTipi;
     }
+    public Soru(String kullaniciEposta, String soruMetni, String medyaYolu ,int zorluk, String[] siklar, int dogruCevap, int soruTipi,int soruID) {
+        this.kullaniciEposta = kullaniciEposta;
+        this.soruMetni = soruMetni;
+        this.medyaYolu = medyaYolu;
+        this.zorluk = zorluk;
+        this.siklar = siklar;
+        this.dogruCevap = dogruCevap;
+        this.soruTipi = soruTipi;
+        this.soruID = soruID;
+    }
 
     public String getSoruMetni() {
         return soruMetni;

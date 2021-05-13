@@ -3,6 +3,7 @@ package com.example.a17011066_alp_bintug_uzun;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -152,8 +153,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean soruDuzenle(Soru soru){
 
+        String q = "SELECT " +SORU_ID +" FROM " + SORU_TABLOSU + " WHERE " + KULLANICI_EPOSTA +" = \"" + soru.getKullaniciEposta() +"\"";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(q, null);
+        cursor.moveToFirst();
+        Log.d("heoheohk",String.join(",",String.valueOf(cursor.getInt(cursor.getColumnIndex(SORU_ID)))));
         String siklar = String.join("¨",soru.getSiklar());
-        SQLiteDatabase db = this.getReadableDatabase();
+
+        q = "UPDATE " + SORU_TABLOSU + " SET " + SORU_DOGRU_SIK + " = " + soru.getDogruCevap() +
+                ", " + SORU_METNI + " = \"" + soru.getSoruMetni() + "\", " + SORU_TIPI + " = " + soru.getSoruTipi() +
+                ", " + SORU_SIKLAR + " = \"" + siklar + "\", " + SORU_MEDYA_YOLU + " = \"" + soru.getMedyaYolu() +
+                "\" WHERE " + SORU_ID + " = " + soru.getSoruID();
+        Log.d("Soru duzenleme fonksiyonu cagrildi",q);
+        Log.d("Siklar:",siklar);
+
 
         ContentValues cv = new ContentValues();
         cv.put(SORU_DOGRU_SIK,soru.getDogruCevap());
@@ -162,10 +176,12 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(SORU_SIKLAR,siklar);
         cv.put(SORU_TIPI,soru.getSoruTipi());
 
-        long result = db.update(SORU_TABLOSU, cv, SORU_ID+" = ?", new String[]{String.valueOf(soru.getSoruID())});
+        //long result = db.update(SORU_TABLOSU, cv, SORU_ID + "=?",new String[]{String.valueOf(soru.getSoruID())});
+        //Log.d("annen",String.valueOf(result));
+        db.execSQL(q);
         db.close();
 
-        return result == 1;
+        return true;
     }
 
     public ArrayList<Soru> sorulariGetir(String kullaniciEPosta){
@@ -181,7 +197,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndex(SORU_SIKLAR)).split("¨").length,
                     cursor.getString(cursor.getColumnIndex(SORU_SIKLAR)).split("¨"),
                     cursor.getInt(cursor.getColumnIndex(SORU_DOGRU_SIK)),
-                    cursor.getInt(cursor.getColumnIndex(SORU_TIPI))));
+                    cursor.getInt(cursor.getColumnIndex(SORU_TIPI)),
+                    cursor.getInt(cursor.getColumnIndex(SORU_ID))));
         }
 
         return  sorular;

@@ -146,10 +146,11 @@ public class SoruEkrani extends AppCompatActivity {
         if(sik4.getText().toString().length()!=0)
             siklar.add(sik4.getText().toString());
         if(duzenlemeButonu.getText().toString().equals("Kaydet")){
-            if(soruMetni.getText().length()==0 || siklar.size() <2){
-                Toast.makeText(this,"Lütfen soru metnini giriniz ve en az iki adet şıkkı doldurunuz.",Toast.LENGTH_LONG).show();
+            if(soruMetni.getText().length()==0 || siklar.size() <2 || radioGroup_Siklar.getCheckedRadioButtonId()==-1){
+                Toast.makeText(this,"Lütfen soru metnini giriniz, en az iki adet şıkkı doldurunuz ve doğru şıkkı seçiniz.",Toast.LENGTH_LONG).show();
                 return;
             }
+            Log.d("sikLen",String.valueOf(siklar.size()));
             Soru soru = new Soru(kullaniciEposta,soruMetni.getText().toString(),siklar.size(),siklar.toArray(new String[0]),Integer.valueOf(((RadioButton)parentView.findViewById(radioGroup_Siklar.getCheckedRadioButtonId())).getText().toString()));
 
             if(soruID.getText().toString().length()==0){
@@ -172,7 +173,9 @@ public class SoruEkrani extends AppCompatActivity {
                 }
             }
             else {
+                Log.d("Soru duzenle oldugunu anladım","");
                 soru.setSoruID(Integer.valueOf(soruID.getText().toString()));
+                Log.d("Sorunun ID'si",soruID.getText().toString());
                 db.soruDuzenle(soru);
             }
 
@@ -188,13 +191,18 @@ public class SoruEkrani extends AppCompatActivity {
         else{
             Log.d("else girdim","heheheh");
             soruMetni.setEnabled(true);
-
             sik0.setEnabled(true);
             sik1.setEnabled(true);
             sik2.setEnabled(true);
             sik3.setEnabled(true);
             sik4.setEnabled(true);
             radioGroup_Siklar.setEnabled(true);
+            sik2.setVisibility(View.VISIBLE);
+            sik3.setVisibility(View.VISIBLE);
+            sik4.setVisibility(View.VISIBLE);
+            ((RadioButton)parentView.findViewById(R.id.radbutton_sik2)).setVisibility(View.VISIBLE);
+            ((RadioButton)parentView.findViewById(R.id.radbutton_sik3)).setVisibility(View.VISIBLE);
+            ((RadioButton)parentView.findViewById(R.id.radbutton_sik4)).setVisibility(View.VISIBLE);
             duzenlemeButonu.setText("Kaydet");
         }
     }
