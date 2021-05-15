@@ -108,5 +108,10 @@ public class Soru {
     public void setSoruID(int soruID) {
         this.soruID = soruID;
     }
+
+    @Override
+    public String toString(){
+        return "{\""+kullaniciEposta+"\",\""+soruMetni+"\",\""+medyaYolu+"\",\""+String.valueOf(zorluk)+"\",\""+String.join("¨",siklar)+"\",\""+String.valueOf(dogruCevap)+"\",\""+String.valueOf(soruTipi)+"\"}";
+    }
 //endregion
 }

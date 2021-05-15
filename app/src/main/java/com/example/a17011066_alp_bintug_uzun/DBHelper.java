@@ -112,14 +112,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public Kullanici kullaniciGirisi(String eposta, String sifre){
         Log.d(eposta,sifre);
         String q = "SELECT * FROM " + KULLANICI_TABLOSU + " WHERE " + KULLANICI_EPOSTA + " = \"" + eposta + "\" AND " + KULLANICI_SIFRE + " = \"" + sifre + "\"";
-        Log.d("sorgu",q);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(q, null);
-        Log.d("sorguyuYaptim","heheee");
-        Log.d("kapadim","heheee");
         if(cursor.moveToFirst()) {
-
-            Log.d("buldum","heheee");
             Kullanici kullanici = new Kullanici(
                     cursor.getString(cursor.getColumnIndex(KULLANICI_AD)),
                     cursor.getString(cursor.getColumnIndex(KULLANICI_SOYAD)),
@@ -136,7 +131,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean soruEkle(Soru soru){
         String siklar = String.join("¨",soru.getSiklar());
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(KULLANICI_EPOSTA,soru.getKullaniciEposta());
@@ -153,21 +148,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean soruDuzenle(Soru soru){
 
-        String q = "SELECT " +SORU_ID +" FROM " + SORU_TABLOSU + " WHERE " + KULLANICI_EPOSTA +" = \"" + soru.getKullaniciEposta() +"\"";
-
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(q, null);
-        cursor.moveToFirst();
-        Log.d("heoheohk",String.join(",",String.valueOf(cursor.getInt(cursor.getColumnIndex(SORU_ID)))));
         String siklar = String.join("¨",soru.getSiklar());
-
-        q = "UPDATE " + SORU_TABLOSU + " SET " + SORU_DOGRU_SIK + " = " + soru.getDogruCevap() +
+/*
+        String q = "UPDATE " + SORU_TABLOSU + " SET " + SORU_DOGRU_SIK + " = " + soru.getDogruCevap() +
                 ", " + SORU_METNI + " = \"" + soru.getSoruMetni() + "\", " + SORU_TIPI + " = " + soru.getSoruTipi() +
                 ", " + SORU_SIKLAR + " = \"" + siklar + "\", " + SORU_MEDYA_YOLU + " = \"" + soru.getMedyaYolu() +
                 "\" WHERE " + SORU_ID + " = " + soru.getSoruID();
-        Log.d("Soru duzenleme fonksiyonu cagrildi",q);
-        Log.d("Siklar:",siklar);
 
+        db.execSQL(q);
+*/
 
         ContentValues cv = new ContentValues();
         cv.put(SORU_DOGRU_SIK,soru.getDogruCevap());
@@ -176,12 +166,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(SORU_SIKLAR,siklar);
         cv.put(SORU_TIPI,soru.getSoruTipi());
 
-        //long result = db.update(SORU_TABLOSU, cv, SORU_ID + "=?",new String[]{String.valueOf(soru.getSoruID())});
-        //Log.d("annen",String.valueOf(result));
-        db.execSQL(q);
+        long result = db.update(SORU_TABLOSU, cv, SORU_ID + "=?",new String[]{String.valueOf(soru.getSoruID())});
         db.close();
 
-        return true;
+        return result > 0;
     }
 
     public ArrayList<Soru> sorulariGetir(String kullaniciEPosta){
@@ -200,8 +188,129 @@ public class DBHelper extends SQLiteOpenHelper {
                     cursor.getInt(cursor.getColumnIndex(SORU_TIPI)),
                     cursor.getInt(cursor.getColumnIndex(SORU_ID))));
         }
-
         return  sorular;
+    }
+    public boolean soruSil(int soruID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result =  db.delete(SORU_TABLOSU, SORU_ID+"=?",new String[]{String.valueOf(soruID)});
+        db.close();
+        return result>0;
+    }
 
+    public ArrayList<Sinav> sinavlariGetir(String kullaniciEPosta){
+        ArrayList<Sinav> sinavlar = new ArrayList<Sinav>();
+
+        String q = "SELECT * FROM " + SINAV_TABLOSU + " WHERE " + KULLANICI_EPOSTA +" = \"" + kullaniciEPosta +"\"";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(q, null);
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            sinavlar.add(new Sinav(cursor.getString(cursor.getColumnIndex(KULLANICI_EPOSTA)),
+                    cursor.getInt(cursor.getColumnIndex(SINAV_ID)),
+                    cursor.getInt(cursor.getColumnIndex(SINAV_ZORLUK_DERECESI)),
+                    cursor.getInt(cursor.getColumnIndex(SINAV_SURESI)),
+                    cursor.getString(cursor.getColumnIndex(SINAV_ADI))));
+        }
+        return  sinavlar;
+    }
+    public boolean sinavEkle(Sinav sinav){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(KULLANICI_EPOSTA,sinav.getKullaniciEPosta());
+        cv.put(SINAV_SURESI,sinav.getSinavSuresi());
+        cv.put(SINAV_ADI,sinav.getSinavAdi());
+        cv.put(SINAV_ZORLUK_DERECESI,sinav.getZorlukDerecesi());
+
+        long result = db.insert(SINAV_TABLOSU,null,cv);
+        db.close();
+        return result!=-1;
+    }
+    public boolean sinavDuzenle(Sinav sinav){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        ContentValues cv = new ContentValues();
+        cv.put(SINAV_ADI,sinav.getSinavAdi());
+        cv.put(SINAV_ZORLUK_DERECESI,sinav.getZorlukDerecesi());
+        cv.put(SINAV_SURESI,sinav.getSinavSuresi());
+
+        long result = db.update(SINAV_TABLOSU, cv, SINAV_ID + "=?",new String[]{String.valueOf(sinav.getSinavID())});
+        db.close();
+
+        return result > 0;
+    }
+    public int sinavSoruSayisi(int SinavID){
+        String q = "SELECT * FROM " + SINAV_SORULARI_TABLOSU + " WHERE " + SINAV_ID + " = " + SinavID;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(q,null);
+        int count = cursor.getCount();
+        db.close();
+        cursor.close();
+        return count;
+    }
+    public int sonSinavID(String kullaniciEPosta){
+        String q = "SELECT * FROM " + SINAV_TABLOSU + " WHERE " + KULLANICI_EPOSTA+ " = \""+ kullaniciEPosta+"\"";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(q,null);
+        int ID = -1;
+        if(cursor.moveToLast()){
+            ID = cursor.getInt(cursor.getColumnIndex(SINAV_ID));
+        }
+        db.close();
+        cursor.close();
+        return ID;
+    }
+    public boolean sinavSil(int SinavID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result =  db.delete(SINAV_TABLOSU, SINAV_ID+"=?",new String[]{String.valueOf(SinavID)});
+        db.close();
+        return result>0;
+    }
+    public ArrayList<Soru> sinavSorulariniGetir(int SinavID){
+        ArrayList<Soru> sinavSorulari = new ArrayList<Soru>();
+        String q = "SELECT " +
+                SORU_TABLOSU+"."+SORU_ID + " AS " +SORU_ID+ ", " +
+                SORU_TABLOSU+"."+SORU_METNI + " AS " +SORU_METNI+ ", " +
+                SORU_TABLOSU+"."+ SORU_MEDYA_YOLU + " AS " +SORU_MEDYA_YOLU+ ", " +
+                SORU_TABLOSU+"."+SORU_SIKLAR + " AS " +SORU_SIKLAR+ ", " +
+                SORU_TABLOSU+"."+SORU_DOGRU_SIK + " AS " +SORU_DOGRU_SIK+ ", " +
+                SORU_TABLOSU+"."+SORU_TIPI + " AS " +SORU_TIPI+ ", " +
+                SORU_TABLOSU+"."+KULLANICI_EPOSTA+ " AS " +KULLANICI_EPOSTA+
+                " FROM " + SINAV_SORULARI_TABLOSU + ", " + SORU_TABLOSU +
+                " WHERE " + SINAV_SORULARI_TABLOSU+"."+SINAV_ID + " = " + SinavID +
+                " AND " + SINAV_SORULARI_TABLOSU+"."+SORU_ID+"="+SORU_TABLOSU+"."+SORU_ID;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(q, null);
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            sinavSorulari.add(new Soru(cursor.getString(cursor.getColumnIndex(KULLANICI_EPOSTA)),
+                    cursor.getString(cursor.getColumnIndex(SORU_METNI)),
+                    cursor.getString(cursor.getColumnIndex(SORU_MEDYA_YOLU)),
+                    cursor.getString(cursor.getColumnIndex(SORU_SIKLAR)).split("¨").length,
+                    cursor.getString(cursor.getColumnIndex(SORU_SIKLAR)).split("¨"),
+                    cursor.getInt(cursor.getColumnIndex(SORU_DOGRU_SIK)),
+                    cursor.getInt(cursor.getColumnIndex(SORU_TIPI)),
+                    cursor.getInt(cursor.getColumnIndex(SORU_ID))));
+        }
+
+        return  sinavSorulari;
+    }
+    public boolean sinavSoruEkle(int SinavID, int SoruID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(SINAV_ID,SinavID);
+        cv.put(SORU_ID,SoruID);
+
+        long result = db.insert(SINAV_SORULARI_TABLOSU,null,cv);
+        db.close();
+        return result!=-1;
+    }
+    public boolean sinavSoruSil(int SinavID, int SoruID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result =  db.delete(SINAV_SORULARI_TABLOSU, SINAV_ID+"=? AND "+SORU_ID+"=?",new String[]{String.valueOf(SinavID),String.valueOf(SoruID)});
+        db.close();
+        return result>0;
     }
 }

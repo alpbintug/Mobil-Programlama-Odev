@@ -7,7 +7,7 @@
     android:background="#FAF6F6">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/soru_cardView"
+        android:id="@+id/sinav_SoruCardView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginStart="10dp"
@@ -22,18 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/button_soruEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="2dp"
-                android:background="#E48585"
-                android:onClick="buttonSoruDuzenle"
-                android:text="Düzenle"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSoruSil"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/lbl_sinavSoruID"
                 android:layout_width="wrap_content"
@@ -47,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/soru_txtSoruMetni"
+                android:id="@+id/sinav_txtSoruMetni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -60,10 +48,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewSoruResmi" />
+                app:layout_constraintTop_toBottomOf="@+id/sinav_imageViewSoruResmi" />
 
             <EditText
-                android:id="@+id/soru_txtSik1"
+                android:id="@+id/sinav_soru_txtSik1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -73,14 +61,14 @@
                 android:gravity="start|top"
                 android:hint="(ZORUNLU) İkinci Şıkkı Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik2"
+                app:layout_constraintBottom_toTopOf="@+id/sinav_soru_txtSik2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik0" />
+                app:layout_constraintTop_toBottomOf="@+id/sinav_soru_txtSik0" />
 
             <EditText
-                android:id="@+id/soru_txtSik2"
+                android:id="@+id/sinav_soru_txtSik2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -90,14 +78,14 @@
                 android:gravity="start|top"
                 android:hint="Üçüncü Şıkkı Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik3"
+                app:layout_constraintBottom_toTopOf="@+id/sinav_soru_txtSik3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik1" />
+                app:layout_constraintTop_toBottomOf="@+id/sinav_soru_txtSik1" />
 
             <EditText
-                android:id="@+id/soru_txtSik3"
+                android:id="@+id/sinav_soru_txtSik3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -107,14 +95,14 @@
                 android:gravity="start|top"
                 android:hint="Dördüncü Şıkkı Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik4"
+                app:layout_constraintBottom_toTopOf="@+id/sinav_soru_txtSik4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik2" />
+                app:layout_constraintTop_toBottomOf="@+id/sinav_soru_txtSik2" />
 
             <EditText
-                android:id="@+id/soru_txtSik4"
+                android:id="@+id/sinav_soru_txtSik4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -128,10 +116,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/soru_txtSik3" />
+                app:layout_constraintTop_toBottomOf="@+id/sinav_soru_txtSik3" />
 
             <EditText
-                android:id="@+id/soru_txtSik0"
+                android:id="@+id/sinav_soru_txtSik0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -141,14 +129,14 @@
                 android:gravity="start|top"
                 android:hint="(ZORUNLU) Birinci Şıkkı Giriniz"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/soru_txtSik1"
+                app:layout_constraintBottom_toTopOf="@+id/sinav_soru_txtSik1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/soru_txtSoruMetni" />
+                app:layout_constraintTop_toBottomOf="@+id/sinav_txtSoruMetni" />
 
             <TextView
-                android:id="@+id/txt_soruID"
+                android:id="@+id/sinav_txt_soruID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -159,16 +147,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RadioGroup
-                android:id="@+id/radbuttongr_siklar"
+                android:id="@+id/sinav_radbuttongr_siklar"
                 android:layout_width="190dp"
                 android:layout_height="243dp"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="2dp"
-                app:layout_constraintStart_toEndOf="@+id/soru_txtSik4"
-                app:layout_constraintTop_toBottomOf="@+id/soru_txtSoruMetni">
+                app:layout_constraintStart_toEndOf="@+id/sinav_soru_txtSik4"
+                app:layout_constraintTop_toBottomOf="@+id/sinav_txtSoruMetni">
 
                 <RadioButton
-                    android:id="@+id/radbutton_sik0"
+                    android:id="@+id/sinav_radbutton_sik0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
@@ -176,7 +164,7 @@
                     android:textSize="0sp" />
 
                 <RadioButton
-                    android:id="@+id/radbutton_sik1"
+                    android:id="@+id/sinav_radbutton_sik1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
@@ -184,7 +172,7 @@
                     android:textSize="0sp" />
 
                 <RadioButton
-                    android:id="@+id/radbutton_sik2"
+                    android:id="@+id/sinav_radbutton_sik2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
@@ -192,7 +180,7 @@
                     android:textSize="0sp" />
 
                 <RadioButton
-                    android:id="@+id/radbutton_sik3"
+                    android:id="@+id/sinav_radbutton_sik3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
@@ -200,7 +188,7 @@
                     android:textSize="0sp" />
 
                 <RadioButton
-                    android:id="@+id/radbutton_sik4"
+                    android:id="@+id/sinav_radbutton_sik4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
@@ -209,24 +197,23 @@
             </RadioGroup>
 
             <ImageView
-                android:id="@+id/imageViewSoruResmi"
+                android:id="@+id/sinav_imageViewSoruResmi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:onClick="resimSec"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_soruEdit"
+                app:layout_constraintTop_toBottomOf="@+id/sinav_soruEkle"
                 app:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <Button
-                android:id="@+id/buttonSoruSil"
+                android:id="@+id/sinav_soruEkle"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="5dp"
                 android:background="#FA0000"
                 android:backgroundTint="#FF0000"
-                android:onClick="soruSil"
+                android:onClick="sinavSoruSec"
                 android:text="X"
                 android:textColorLink="#FFFFFF"
                 android:textSize="20sp"

@@ -3,25 +3,49 @@ package com.example.a17011066_alp_bintug_uzun;
 import java.util.ArrayList;
 
 public class Sinav {
-    private ArrayList<Soru> sorular;
+
+    private int sinavID;
     private int zorlukDerecesi;
     private int sinavSuresi;
+    private String sinavAdi;
+    private String kullaniciEPosta;
 
     //region Constructer & Getter-Setter
-    public Sinav(ArrayList<Soru> sorular, int zorlukDerecesi, int sinavSuresi) {
-        this.sorular = sorular;
+    public Sinav(String kullaniciEPosta, int sinavID, int zorlukDerecesi, int sinavSuresi, String sinavAdi) {
+        this.sinavID = sinavID;
         this.zorlukDerecesi = zorlukDerecesi;
         this.sinavSuresi = sinavSuresi;
+        this.sinavAdi = sinavAdi;
+        this.kullaniciEPosta = kullaniciEPosta;
+    }
+    public Sinav(String kullaniciEPosta,  int zorlukDerecesi, int sinavSuresi, String sinavAdi) {
+        this.zorlukDerecesi = zorlukDerecesi;
+        this.sinavSuresi = sinavSuresi;
+        this.sinavAdi = sinavAdi;
+        this.kullaniciEPosta = kullaniciEPosta;
+    }
+    public String getKullaniciEPosta() {
+        return kullaniciEPosta;
     }
 
-    public ArrayList<Soru> getSorular() {
-        return sorular;
+    public void setKullaniciEPosta(String kullaniciEPosta) {
+        this.kullaniciEPosta = kullaniciEPosta;
     }
 
-    public void setSorular(ArrayList<Soru> sorular) {
-        this.sorular = sorular;
+    public String getSinavAdi() {
+        return sinavAdi;
     }
 
+    public void setSinavAdi(String sinavAdi) {
+        this.sinavAdi = sinavAdi;
+    }
+    public int getSinavID() {
+        return sinavID;
+    }
+
+    public void setSinavID(int sinavID) {
+        this.sinavID = sinavID;
+    }
     public int getZorlukDerecesi() {
         return zorlukDerecesi;
     }
@@ -40,6 +64,6 @@ public class Sinav {
     //endregion
     @Override
     public String toString(){
-            return  "";
+            return  "{\""+kullaniciEPosta+"\",\""+sinavAdi+"\",\""+String.valueOf(sinavID)+"\",\""+String.valueOf(sinavSuresi)+"\",\""+String.valueOf(zorlukDerecesi)+"\"}";
     }
 }

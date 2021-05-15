@@ -8,8 +8,12 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/sinav_cardView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,29 +21,16 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txt_sinavID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="210dp"
-                android:editable="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/lbl_sinavID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:layout_marginTop="180dp"
                 android:editable="false"
                 android:text="Sınav ID:"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextSinavSuresi" />
 
             <TextView
                 android:id="@+id/lbl_sinavAdi"
@@ -54,75 +45,39 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txt_sinavAdı"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="30dp"
-                android:editable="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/lbl_sinavSuresi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="3dp"
                 android:editable="false"
-                android:text="Sınav süresi:"
+                android:text="Sınav süresi (dk):"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_sinavSuresi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="150dp"
-                android:editable="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/txtSoruSayisi" />
 
             <TextView
                 android:id="@+id/lbl_sinavSoruID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:layout_marginTop="60dp"
                 android:editable="false"
                 android:text="Soru sayısı:"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_sinavSoruSayisi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="90dp"
-                android:editable="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextSinavAdı" />
 
             <Button
                 android:id="@+id/button_sinavEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="300dp"
+                android:layout_width="128dp"
+                android:layout_height="48dp"
                 android:layout_marginTop="16dp"
+                android:onClick="sinavDuzenle"
                 android:text="Düzenle"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonSinavSil"
+                app:layout_constraintStart_toEndOf="@+id/editTextSinavAdı"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RatingBar
@@ -130,24 +85,101 @@
                 style="@style/Widget.AppCompat.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="216dp"
-                android:layout_marginTop="204dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginEnd="11dp"
+                android:isIndicator="false"
+                android:progressTint="#ff0080"
+                android:stepSize="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_sinavZorlugu" />
 
             <TextView
                 android:id="@+id/txt_sinavZorlugu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="288dp"
-                android:layout_marginTop="180dp"
+                android:layout_marginEnd="12dp"
                 android:editable="false"
                 android:text="Sınav zorluğu:"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ibuttonPaylas" />
+
+            <ImageButton
+                android:id="@+id/ibuttonPaylas"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_marginEnd="11dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonSoruDuzenle"
+                app:srcCompat="?attr/actionModeShareDrawable" />
+
+            <Button
+                android:id="@+id/buttonSoruDuzenle"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="11dp"
+                android:onClick="sinavSoruDuzenle"
+                android:text="Soruları Düzenle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_sinavEdit" />
+
+            <EditText
+                android:id="@+id/editTextSinavAdı"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="5dp"
+                android:ems="10"
+                android:hint="Sınav Adını Giriniz"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/buttonSoruDuzenle"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_sinavAdi" />
+
+            <TextView
+                android:id="@+id/txtSoruSayisi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:editable="false"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_sinavSoruID" />
+
+            <EditText
+                android:id="@+id/editTextSinavSuresi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:ems="10"
+                android:hint="Sınav Süresini Giriniz"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_sinavSuresi" />
+
+            <TextView
+                android:id="@+id/txtSinavID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_sinavID" />
+
+            <Button
+                android:id="@+id/buttonSinavSil"
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#FF0000"
+                android:onClick="sinavSil"
+                android:text="X"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

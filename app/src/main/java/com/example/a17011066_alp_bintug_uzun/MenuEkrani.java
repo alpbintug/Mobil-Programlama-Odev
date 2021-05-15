@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -30,7 +29,7 @@ public class MenuEkrani extends AppCompatActivity {
                 intent.getStringExtra(db.KULLANICI_SIFRE),
                 intent.getStringExtra(db.KULLANICI_AVATAR)
         );
-        findViewById(R.id.xd).setBackground(getResources().getDrawable(getResources().getIdentifier("avatar0","drawable",getPackageName())));
+        //findViewById(R.id.menu_layout).setBackground(getResources().getDrawable(getResources().getIdentifier("avatar0","drawable",getPackageName())));
 
         ImageButton avatar = (ImageButton)findViewById(R.id.menu_ibuttonAvatar);
         Drawable drawableAvatar = getResources().getDrawable(getResources().getIdentifier(kullanici.getAvatar(),"drawable",getPackageName()));
@@ -44,15 +43,14 @@ public class MenuEkrani extends AppCompatActivity {
         menuAcma.putExtra(db.KULLANICI_EPOSTA,kullanici.getEposta());
         startActivity(menuAcma);
     }
-    public void buttonSinavlar(View view){
-        Log.d("olus","turdum");
-        Intent menuAcma = new Intent(getApplicationContext(),SinavEkrani.class);
-        Log.d("aci","yorum");
-        startActivity(menuAcma);
 
+    public void buttonSinavlar(View view){
+        Intent menuAcma = new Intent(getApplicationContext(),SinavEkrani.class);
+        menuAcma.putExtra(db.KULLANICI_EPOSTA,kullanici.getEposta());
+        startActivity(menuAcma);
     }
+
     public void buttonCikisYap(View view){
         finish();
-
     }
 }

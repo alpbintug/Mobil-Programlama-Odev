@@ -1,6 +1,10 @@
 package com.example.a17011066_alp_bintug_uzun;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -11,7 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -19,6 +26,8 @@ import java.util.regex.Pattern;
 
 public class Giris extends AppCompatActivity {
 
+    private int STORAGE_PERMISSION = 1;
+    Activity main;
     private int avatarCounter = 0;
     private int loginErrorCounter = 0;
     private DBHelper db;
@@ -33,6 +42,11 @@ public class Giris extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+        main = Giris.this;
+        if(ContextCompat.checkSelfPermission(Giris.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestStoragePermission();
+        }
         //region SETTING UP VARIABLES
         db = new DBHelper(this);
         //this.deleteDatabase(db.getDatabaseName());
@@ -54,6 +68,33 @@ public class Giris extends AppCompatActivity {
 
     }
 
+    private void requestStoragePermission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(main,Manifest.permission.READ_EXTERNAL_STORAGE)){
+                new AlertDialog.Builder(main)
+                        .setTitle("İzin gerekli.")
+                        .setMessage("Oluşturduğunuz soruları ve medyaları güncelleyip kaydedebilmek için izninize gerek duyuyoruz.")
+                        .setPositiveButton("İzin ver", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(main, new String[]{
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                },STORAGE_PERMISSION);
+                            }
+                        }).setNegativeButton("Reddet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+        }
+        else {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            },STORAGE_PERMISSION);
+        }
+    }
     public void switchVisibility(View view, boolean girisEkraniAcik){
         Button kayitButon = ((Button)findViewById(R.id.buttonKayitOl));
         Button girisButon = ((Button)findViewById(R.id.buttonGirisYap));
