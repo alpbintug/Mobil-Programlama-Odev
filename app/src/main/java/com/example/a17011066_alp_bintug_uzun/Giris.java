@@ -31,11 +31,12 @@ public class Giris extends AppCompatActivity {
     private int avatarCounter = 0;
     private int loginErrorCounter = 0;
     private DBHelper db;
+    int alpha = 170;
     private static String epostaRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     private static String telefonRegex = "^\\+{0,1}[0-9]{10,13}$";
     private static final Pattern epostaDesen = Pattern.compile(epostaRegex);
     private static final Pattern telefonDesen = Pattern.compile(telefonRegex);
-    private int hataRengi = Color.argb(50,255,0,0);
+    private int hataRengi = Color.argb(alpha,255,0,0);
     private int normalRenk = Color.argb(255,255,255,255);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class Giris extends AppCompatActivity {
         buttonKayitOl.setText(kayitButtonText);
         ibuttonAvatar.setBackground(drawableAvatar);
         //endregion
+        clearText(buttonKayitOl);
 
     }
 
@@ -144,8 +146,8 @@ public class Giris extends AppCompatActivity {
                 menuAcma.putExtra(db.KULLANICI_SIFRE,kullanici.getSifre());
                 menuAcma.putExtra(db.KULLANICI_AVATAR,kullanici.getAvatar());
 
+                loginErrorCounter=0;
                 startActivity(menuAcma);
-
             }
             else
                 Toast.makeText(getApplicationContext(),"Kullanici adi ya da sifre hatali!",Toast.LENGTH_SHORT).show();
@@ -158,6 +160,8 @@ public class Giris extends AppCompatActivity {
             }
         }
         else{
+            findViewById(R.id.girisEkraniArkaPlan).setBackground(getResources().getDrawable(getResources().getIdentifier("girisekrani","drawable",getPackageName())));
+
             switchVisibility(view,true);
             clearText(view);
         }
@@ -183,7 +187,7 @@ public class Giris extends AppCompatActivity {
         if (kayitButon.getText().equals("Kayıt Ol")) {
 
             switchVisibility(view, false);
-
+            findViewById(R.id.girisEkraniArkaPlan).setBackground(getResources().getDrawable(getResources().getIdentifier("kayitekrani","drawable",getPackageName())));
         }
         else {
             if(strAd.length() == 0){
@@ -218,6 +222,8 @@ public class Giris extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Kayit basarili!", Toast.LENGTH_SHORT).show();
                     clearText(view);
                     switchVisibility(view, true);
+                    findViewById(R.id.girisEkraniArkaPlan).setBackground(getResources().getDrawable(getResources().getIdentifier("girisekrani","drawable",getPackageName())));
+
                 }
                 else{
                     eposta.setBackgroundColor(hataRengi);

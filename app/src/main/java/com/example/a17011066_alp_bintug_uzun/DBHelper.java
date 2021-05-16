@@ -313,4 +313,22 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return result>0;
     }
+    public Sinav sinavGetir(int SinavID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String q = "SELECT * FROM " + SINAV_TABLOSU + " WHERE " + SINAV_ID + " = " + SinavID;
+        Cursor cursor = db.rawQuery(q, null);
+
+        if(cursor.moveToFirst()){
+            Sinav sinav = new Sinav(cursor.getString(cursor.getColumnIndex(KULLANICI_EPOSTA)),
+                    cursor.getInt(cursor.getColumnIndex(SINAV_ID)),
+                    cursor.getInt(cursor.getColumnIndex(SINAV_ZORLUK_DERECESI)),
+                    cursor.getInt(cursor.getColumnIndex(SINAV_SURESI)),
+                    cursor.getString(cursor.getColumnIndex(SINAV_ADI)));
+            cursor.close();
+            return sinav;
+        }
+        cursor.close();
+        return null;
+
+    }
 }

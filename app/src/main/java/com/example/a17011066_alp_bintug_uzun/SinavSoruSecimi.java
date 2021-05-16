@@ -33,7 +33,7 @@ public class SinavSoruSecimi extends AppCompatActivity {
     LinearLayout layout;
     View viewToAdd;
     int[] rgb = {255,255,0};
-    int alpha = 25;
+    int alpha = 170;
     int lastTo255 = 0;
     int colorChange = 17;
     private DBHelper db;

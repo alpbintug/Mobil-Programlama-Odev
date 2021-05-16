@@ -64,6 +64,6 @@ public class Sinav {
     //endregion
     @Override
     public String toString(){
-            return  "{\""+kullaniciEPosta+"\",\""+sinavAdi+"\",\""+String.valueOf(sinavID)+"\",\""+String.valueOf(sinavSuresi)+"\",\""+String.valueOf(zorlukDerecesi)+"\"}";
+            return  "{\nSinav Adi: \""+sinavAdi+"\"\nSinav ID: \""+String.valueOf(sinavID)+"\"\nSinav Suresi: \""+String.valueOf(sinavSuresi)+"\"\nZorluk Derecesi: \""+String.valueOf(zorlukDerecesi)+"\"\n}";
     }
 }

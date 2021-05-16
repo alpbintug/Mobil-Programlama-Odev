@@ -109,17 +109,20 @@
                 android:layout_width="62dp"
                 android:layout_height="62dp"
                 android:layout_marginEnd="11dp"
+                android:onClick="sinavPaylas"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonSoruDuzenle"
+                app:layout_constraintTop_toBottomOf="@+id/button_sinavSoruEdit"
                 app:srcCompat="?attr/actionModeShareDrawable" />
 
             <Button
-                android:id="@+id/buttonSoruDuzenle"
+                android:id="@+id/button_sinavSoruEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginEnd="11dp"
+                android:enabled="false"
                 android:onClick="sinavSoruDuzenle"
                 android:text="Soruları Düzenle"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_sinavEdit" />
 
@@ -132,7 +135,7 @@
                 android:ems="10"
                 android:hint="Sınav Adını Giriniz"
                 android:inputType="textPersonName"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSoruDuzenle"
+                app:layout_constraintEnd_toStartOf="@+id/button_sinavSoruEdit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_sinavAdi" />
 

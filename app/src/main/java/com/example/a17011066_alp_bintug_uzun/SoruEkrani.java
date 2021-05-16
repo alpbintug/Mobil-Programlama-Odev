@@ -47,8 +47,8 @@ public class SoruEkrani extends AppCompatActivity {
     LinearLayout layout;
     View viewToAdd;
     String kullaniciEposta;
-    int[] rgb = {255,255,0};
-    int alpha = 25;
+    int[] rgb = {255,150,0};
+    int alpha = 255;
     int lastTo255 = 0;
     int colorChange = 17;
     private DBHelper db;
@@ -73,24 +73,31 @@ public class SoruEkrani extends AppCompatActivity {
         //endregion
         //region BOS SORU PANOSU EKLEME
         int bgc = Color.argb(alpha,rgb[0],rgb[1],rgb[2]);
-        if(rgb[(lastTo255+1)%3]!=255){
-            rgb[(lastTo255+1)%3]+=colorChange;
-        }
-        else if(rgb[lastTo255]>0){
-            rgb[lastTo255]-=colorChange;
-        }
-        else{
-            lastTo255=(lastTo255+1)%3;
-        }
-
+        calculateColors();
         viewToAdd = LayoutInflater.from(this).inflate(R.layout.sorular_liste_ogesi_metinli,null);
-        viewToAdd.findViewById(R.id.soru_cardView).setBackgroundColor(bgc);
+        viewToAdd.findViewById(R.id.soru_cardView).setBackgroundColor(Color.argb(alpha/2,rgb[0],rgb[1],rgb[2]));
         ((Button)viewToAdd.findViewById(R.id.button_soruEdit)).setText("Kaydet");
         layout.addView(viewToAdd);
 
         //endregion
     }
 
+    public void calculateColors(){
+
+        if(rgb[(lastTo255+1)%3]<255){
+            rgb[(lastTo255+1)%3]+=colorChange;
+            if(rgb[(lastTo255+1)%3]>255)
+                rgb[(lastTo255+1)%3]=255;
+        }
+        else if(rgb[lastTo255]>0){
+            rgb[lastTo255]-=colorChange;
+            if(rgb[lastTo255]<0)
+                rgb[lastTo255]=0;
+        }
+        else{
+            lastTo255=(lastTo255+1)%3;
+        }
+    }
     public void sorulariYerlestir(ArrayList<Soru> sorular){
         for (Soru soru: sorular ) {
 
@@ -98,15 +105,7 @@ public class SoruEkrani extends AppCompatActivity {
 
             //region ARKA PLAN RENKLERINI AYARLAMA
             int bgc = Color.argb(alpha,rgb[0],rgb[1],rgb[2]);
-            if(rgb[(lastTo255+1)%3]!=255){
-                rgb[(lastTo255+1)%3]+=colorChange;
-            }
-            else if(rgb[lastTo255]>0){
-                rgb[lastTo255]-=colorChange;
-            }
-            else{
-                lastTo255=(lastTo255+1)%3;
-            }
+            calculateColors();
             viewToAdd.findViewById(R.id.soru_cardView).setBackgroundColor(bgc);
             //endregion
 
@@ -235,7 +234,6 @@ public class SoruEkrani extends AppCompatActivity {
                 Toast.makeText(this,"Lütfen soru metnini giriniz, en az iki adet şıkkı doldurunuz ve doğru şıkkı seçiniz.",Toast.LENGTH_LONG).show();
                 return;
             }
-            Log.d("sikLen",String.valueOf(siklar.size()));
             Soru soru = new Soru(kullaniciEposta,soruMetni.getText().toString(),siklar.size(),siklar.toArray(new String[0]),Integer.valueOf(((RadioButton)parentView.findViewById(radioGroup_Siklar.getCheckedRadioButtonId())).getText().toString()));
             if(soruGorseli.getTag()!=null)
                 soru.setMedyaYolu(soruGorseli.getTag().toString(),1);
@@ -245,15 +243,9 @@ public class SoruEkrani extends AppCompatActivity {
                 if(db.soruEkle(soru)){
 
                     int bgc = Color.argb(alpha,rgb[0],rgb[1],rgb[2]);
-                    if(rgb[(lastTo255+1)%3]!=255){
-                        rgb[(lastTo255+1)%3]+=colorChange;
-                    }
-                    else if(rgb[lastTo255]>0){
-                        rgb[lastTo255]-=colorChange;
-                    }
-                    else{
-                        lastTo255=(lastTo255+1)%3;
-                    }
+                    parentView.setBackgroundColor(bgc);
+                    calculateColors();
+                    bgc = Color.argb(alpha/2,rgb[0],rgb[1],rgb[2]);
                     viewToAdd = LayoutInflater.from(this).inflate(R.layout.sorular_liste_ogesi_metinli,null);
                     viewToAdd.findViewById(R.id.soru_cardView).setBackgroundColor(bgc);
                     ((Button)viewToAdd.findViewById(R.id.button_soruEdit)).setText("Kaydet");
@@ -261,9 +253,7 @@ public class SoruEkrani extends AppCompatActivity {
                 }
             }
             else {
-                Log.d("Soru duzenle oldugunu anladım","");
                 soru.setSoruID(Integer.valueOf(soruID.getText().toString()));
-                Log.d("Sorunun ID'si",soruID.getText().toString());
                 db.soruDuzenle(soru);
             }
             //endregion
@@ -277,14 +267,14 @@ public class SoruEkrani extends AppCompatActivity {
                 sik2.setVisibility(View.INVISIBLE);
             }
             sik3.setEnabled(false);
-            if(sik2.getText().toString().length()==0){
+            if(sik3.getText().toString().length()==0){
                 parentView.findViewById(R.id.radbutton_sik3).setVisibility(View.INVISIBLE);
-                sik2.setVisibility(View.INVISIBLE);
+                sik3.setVisibility(View.INVISIBLE);
             }
             sik4.setEnabled(false);
-            if(sik2.getText().toString().length()==0){
+            if(sik4.getText().toString().length()==0){
                 parentView.findViewById(R.id.radbutton_sik4).setVisibility(View.INVISIBLE);
-                sik2.setVisibility(View.INVISIBLE);
+                sik4.setVisibility(View.INVISIBLE);
             }
             radioGroup_Siklar.setEnabled(false);
             for(int i = 0;i<radioGroup_Siklar.getChildCount();i++){

@@ -111,7 +111,12 @@ public class Soru {
 
     @Override
     public String toString(){
-        return "{\""+kullaniciEposta+"\",\""+soruMetni+"\",\""+medyaYolu+"\",\""+String.valueOf(zorluk)+"\",\""+String.join("¨",siklar)+"\",\""+String.valueOf(dogruCevap)+"\",\""+String.valueOf(soruTipi)+"\"}";
+        String siklarstr = "\t{";
+        for (String sik:siklar) {
+            siklarstr+="\n\t"+sik;
+        }
+        siklarstr += "\n\t}";
+        return "{\nSoru Metni: \""+soruMetni+"\"\n"+siklarstr+"\nDogru Secenek: \""+String.valueOf(dogruCevap)+"\nMedya Yolu: \""+medyaYolu+"\"\n}";
     }
 //endregion
 }

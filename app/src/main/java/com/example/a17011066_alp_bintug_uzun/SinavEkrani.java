@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,10 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -39,9 +44,9 @@ public class SinavEkrani extends AppCompatActivity {
     String kullaniciEPosta;
     private DBHelper db;
 
-    int[] rgb = {255,255,0};
+    int[] rgb = {0,255,150};
     int lastTo255 = 0;
-    int alpha = 25;
+    int alpha = 255;
     int colorChange = 17;
     LinearLayout layout;
     @Override
@@ -85,6 +90,7 @@ public class SinavEkrani extends AppCompatActivity {
             sinavSuresi = (EditText)viewToAdd.findViewById(R.id.editTextSinavSuresi);
             sinavID = (TextView)viewToAdd.findViewById(R.id.txtSinavID);
             soruSayisi = (TextView)viewToAdd.findViewById(R.id.txtSoruSayisi);
+            sorulariDuzenle =  (Button)viewToAdd.findViewById(R.id.button_sinavSoruEdit);
             ratingBar = (RatingBar)viewToAdd.findViewById(R.id.sinav_sinavZorlugu);
             ratingBar.setRating(2.0f);
             ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -106,16 +112,10 @@ public class SinavEkrani extends AppCompatActivity {
             sinavAdi.setEnabled(false);
             ratingBar.setEnabled(false);
             sinavSuresi.setEnabled(false);
+            sorulariDuzenle.setEnabled(true);
+            sorulariDuzenle.setVisibility(View.VISIBLE);
 
-            if(rgb[(lastTo255+1)%3]!=255){
-                rgb[(lastTo255+1)%3]+=colorChange;
-            }
-            else if(rgb[lastTo255]>0){
-                rgb[lastTo255]-=colorChange;
-            }
-            else{
-                lastTo255=(lastTo255+1)%3;
-            }
+            calculateColors();
 
             int bgc = Color.argb(alpha,rgb[0],rgb[1],rgb[2]);
 
@@ -128,7 +128,22 @@ public class SinavEkrani extends AppCompatActivity {
        bosKartEkle(this);
         //endregion
     }
+    public void calculateColors(){
 
+        if(rgb[(lastTo255+1)%3]<255){
+            rgb[(lastTo255+1)%3]+=colorChange;
+            if(rgb[(lastTo255+1)%3]>255)
+                rgb[(lastTo255+1)%3]=255;
+        }
+        else if(rgb[lastTo255]>0){
+            rgb[lastTo255]-=colorChange;
+            if(rgb[lastTo255]<0)
+                rgb[lastTo255]=0;
+        }
+        else{
+            lastTo255=(lastTo255+1)%3;
+        }
+    }
     private void bosKartEkle(Context context){
         View viewToAdd = LayoutInflater.from(context).inflate(R.layout.sinavlar_liste_ogesi,null);
 
@@ -144,17 +159,9 @@ public class SinavEkrani extends AppCompatActivity {
                     ratingBar.setRating(2.0f);
             }
         });
-        if(rgb[(lastTo255+1)%3]!=255){
-            rgb[(lastTo255+1)%3]+=colorChange;
-        }
-        else if(rgb[lastTo255]>0){
-            rgb[lastTo255]-=colorChange;
-        }
-        else{
-            lastTo255=(lastTo255+1)%3;
-        }
+        calculateColors();
 
-        int bgc = Color.argb(alpha,rgb[0],rgb[1],rgb[2]);
+        int bgc = Color.argb(alpha/2,rgb[0],rgb[1],rgb[2]);
 
         sinavAdi.setEnabled(true);
         ratingBar.setEnabled(true);
@@ -167,6 +174,7 @@ public class SinavEkrani extends AppCompatActivity {
     public void sinavDuzenle(View view){
         ViewGroup parentView = (ViewGroup)view.getParent();
         Button duzenle = (Button)view;
+        Button sinavSoruDuzenle = (Button)parentView.findViewById(R.id.button_sinavSoruEdit);
         EditText sinavAdi = (EditText)parentView.findViewById(R.id.editTextSinavAdı);
         EditText sinavSuresi = (EditText)parentView.findViewById(R.id.editTextSinavSuresi);
         TextView sinavID = (TextView)parentView.findViewById(R.id.txtSinavID);
@@ -191,11 +199,16 @@ public class SinavEkrani extends AppCompatActivity {
                     sinavAdi.setEnabled(false);
                     ratingBar.setEnabled(false);
                     sinavSuresi.setEnabled(false);
+                    sinavSoruDuzenle.setEnabled(true);
+                    sinavSoruDuzenle.setVisibility(View.VISIBLE);
+                    int bgc = Color.argb(alpha,rgb[0],rgb[1],rgb[2]);
+                    parentView.setBackgroundColor(bgc);
                     duzenle.setText("Düzenle");
                     SharedPreferences sharedPreferences = getSharedPreferences(kullaniciEPosta, MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                     myEdit.putString(String.valueOf(db.sonSinavID(sinav.getKullaniciEPosta())),sinav.toString());
                     sinavID.setText(String.valueOf(db.sonSinavID(sinav.getKullaniciEPosta())));
+                    bosKartEkle(this);
                 }
             }
             else{
@@ -231,5 +244,46 @@ public class SinavEkrani extends AppCompatActivity {
         menuAcma.putExtra(db.SINAV_ZORLUK_DERECESI,(int)sinavZorlugu.getRating());
         menuAcma.putExtra(db.SINAV_ADI,sinavAdi.getText().toString());
         startActivity(menuAcma);
+    }
+
+    public void sinavPaylas(View view){
+        String text = "<SINAV BİLGİLERİ: \n****SINAV AYARLARI****\n";
+        ViewGroup parentView = (ViewGroup)view.getParent();
+        TextView sinavID = (TextView)parentView.findViewById(R.id.txtSinavID);
+        int SinavID = Integer.valueOf(sinavID.getText().toString());
+        Sinav sinav = db.sinavGetir(SinavID);
+        text+=sinav.toString()+"\n****SORULAR****\n";
+        ArrayList<Soru> sinavSorulari = db.sinavSorulariniGetir(SinavID);
+        for (int i = 0; i<sinavSorulari.size();i++){
+            text+="\n____SORU "+String.valueOf(i)+"____\n"+sinavSorulari.get(i).toString()+"\n";
+        }
+        text+=">";
+        String fileName = "SINAV"+sinavID.getText().toString()+".txt";
+
+        //Log.d("Sinav:",text);
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(fileName,MODE_PRIVATE);
+            fos.write(text.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.d("Sinav:",text);
+        Intent fileShare = new Intent(Intent.ACTION_SEND);
+        fileShare.setType("text/plain");
+
+        fileShare.putExtra(Intent.EXTRA_SUBJECT, sinav.getSinavAdi() + " SINAV BİLGİLERİ");
+        fileShare.putExtra(Intent.EXTRA_TEXT, text);
+        startActivity(fileShare);
+
     }
 }
